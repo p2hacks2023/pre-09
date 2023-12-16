@@ -51,6 +51,6 @@ AVFoundation
 
 その他開発に使用したツール・サービス
 アプリ開発：Xcode  
-ハード開発:Arduino Nano  
+ハード開発:Arduino UNO  
 スライド作成Figma  
 GitHub

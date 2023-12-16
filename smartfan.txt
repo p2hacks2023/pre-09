@@ -1,0 +1,53 @@
+//Arduinoのソースコードです
+// 扇風機の停止・低速・中速・高速の段階制御
+
+const int MOSFET = 6;  // MOSFETが接続されているピン
+const int BUTTON = 7;  // タクトスイッチが接続されているピン
+
+int val = 0;    // 入力ピンの状態
+int state = 0;  // MOSFETの状態（0ならオフ、1〜5ならオン）
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(MOSFET, OUTPUT);  // ArduinoにMOSFETが出力であることを伝える
+  pinMode(BUTTON, INPUT);   // BUTTONは入力に設定
+}
+
+void loop() {
+  val = digitalRead(BUTTON);  // 入力を読み取りvalに格納
+
+  // ボタン押下回数による明るさ定義
+  if (state == 0) {
+    analogWrite(MOSFET, 0);  // 停止：0％
+    delay(10);
+    if (val == 1) {
+      state++;
+      Serial.println(state);
+      delay(500);
+    }
+  } else if (state == 1) {
+    analogWrite(MOSFET, 102);  // 低速：40％
+    delay(10);
+    if (val == 1) {
+      state++;
+      Serial.println(state);
+      delay(500);
+    }
+  } else if (state == 2) {
+    analogWrite(MOSFET, 178.5);  // 高速：70％
+    delay(10);
+    if (val == 1) {
+      state++;
+      Serial.println(state);
+      delay(500);
+    }
+  } else if (state == 3) {
+    analogWrite(MOSFET, 255);  // 低速：100％
+    delay(10);
+    if (val == 1) {
+      state = 0;
+      Serial.println(state);
+      delay(500);
+    }
+  }
+}
